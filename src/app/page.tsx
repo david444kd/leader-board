@@ -35,7 +35,7 @@ interface LeaderboardEntry {
   rank: number;
 }
 
-function isNotionPage(obj: any): obj is NotionPage {
+function isNotionPage(obj: NotionPage) {
   if (obj?.object !== "page" || typeof obj.properties !== "object")
     return false;
   const p = obj.properties;
@@ -54,7 +54,7 @@ export default async function Home() {
     database_id: process.env.DATABASE_ID || "",
   });
 
-  const pages = (response.results as any[]).filter(isNotionPage);
+  const pages = (response.results as NotionPage[]).filter(isNotionPage);
 
   const entries: LeaderboardEntry[] = pages
     .map((page) => {
